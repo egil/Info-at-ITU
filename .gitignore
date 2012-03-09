@@ -1,0 +1,15 @@
+/build
+/classes
+*.jar
+*.class
+*~
+*/proxy/web-app/gwt
+*/proxy/web-app/WEB-INF/classes
+target
+.gwt
+gwt-unitCache
+www-test
+/proxy/war/WEB-INF/deploy/*
+/proxy/war/WEB-INF/appengine-generated/*
+/deploy
+/proxy/war/info_at_itu_proxy/
