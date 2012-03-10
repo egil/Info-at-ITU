@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cronentries>
-  <cron>
-    <url>/flushStaleClients</url>
-    <description>Flushes stale clients from the online list every 5 mintes</description>
-    <schedule>every 5 minutes</schedule>
-  </cron>
-</cronentries>
