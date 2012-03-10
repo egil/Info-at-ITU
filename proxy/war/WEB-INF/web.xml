@@ -31,10 +31,7 @@ xmlns="http://java.sun.com/xml/ns/javaee">
     <servlet-name>trackingServlet</servlet-name>
     <url-pattern>/update</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>trackingServlet</servlet-name>
-    <url-pattern>/flushstaleclients</url-pattern>
-  </servlet-mapping>
+
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

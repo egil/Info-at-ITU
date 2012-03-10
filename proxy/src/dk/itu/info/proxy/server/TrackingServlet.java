@@ -16,10 +16,23 @@ import com.googlecode.objectify.Query;
 
 public class TrackingServlet extends HttpServlet {
 	private static final long serialVersionUID = 85440686344539318L;
-
+	//private static Cache cache;	
+	
 	static {
         ObjectifyService.register(ClientDevice.class);
     }
+	
+//	private static Cache getCache() {
+//		if(cache == null) {			
+//			try {
+//				CacheFactory cacheFactory = CacheManager.getInstance().getCacheFactory();
+//				cache = cacheFactory.createCache(Collections.emptyMap());
+//			} catch (CacheException e) {
+//				//e.printStackTrace();
+//			}	        
+//		}
+//		return cache;
+//	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -27,10 +40,7 @@ public class TrackingServlet extends HttpServlet {
 		String uri = req.getRequestURI();
 		String macAddress = req.getQueryString();
 
-		if(uri.equalsIgnoreCase("/flushstaleclients")) {
-			flushStaleClients(resp);
-		}
-		else if (uri.equalsIgnoreCase("/getallclients")) {
+		if (uri.equalsIgnoreCase("/getallclients")) {
 			getAllClients(resp);
 		} else if (uri.equalsIgnoreCase("/leaving")) {
 			doLeaving(macAddress, resp);
@@ -43,29 +53,26 @@ public class TrackingServlet extends HttpServlet {
 			if (user != null) {
 				doEntering(user.getNickname(), macAddress, resp);
 			} else {
-				resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
+				resp.sendRedirect(userService.createLoginURL("/"));
 			}
 			
 		} else if (uri.equalsIgnoreCase("/ping")) {
 			doPong(macAddress, resp);
 		} else if (uri.equalsIgnoreCase("/update")) {
-			doUpdate(resp);
+			//doUpdate(resp);
+			resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
 		} else {
 			resp.setContentType("text/plain");
 			resp.getWriter().println("Hello, world");
 		}
 	}
 
-	private void flushStaleClients(HttpServletResponse resp) {
-//		Objectify ofy = ObjectifyService.begin();
-//				
-//		
-//		resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-		// todo clean up stale clients
-		
-	}
-
 	private void doEntering(String username, String macAddress, HttpServletResponse resp) {
+		if(macAddress == null || macAddress.isEmpty()) {
+			doReturnMissingArgument(resp);
+			return;
+		}
+		
 		Objectify ofy = ObjectifyService.begin();
 		
 		// Test if device is already being tracked, if true, go to doPong();	
@@ -80,12 +87,17 @@ public class TrackingServlet extends HttpServlet {
 		ofy.put(device);
 		
 		// Notify listeners of changes
-		doNotifyListeners();
+		//doNotifyListeners();
 		
 		resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 	}
 
 	private void doLeaving(String macAddress, HttpServletResponse resp) {
+		if(macAddress == null || macAddress.isEmpty()) {
+			doReturnMissingArgument(resp);
+			return;
+		}
+		
 		Objectify ofy = ObjectifyService.begin();
 		
 		// Find the device
@@ -98,12 +110,17 @@ public class TrackingServlet extends HttpServlet {
 		ofy.delete(device);
 		
 		// Notify listeners of changes
-		doNotifyListeners();
+		//doNotifyListeners();
 		
 		resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 	}
 
 	private void doPong(String macAddress, HttpServletResponse resp) {
+		if(macAddress == null || macAddress.isEmpty()) {
+			doReturnMissingArgument(resp);
+			return;
+		}
+		
 		Objectify ofy = ObjectifyService.begin();
 		ClientDevice device = ofy.find(ClientDevice.class, macAddress);
 		if(device != null) {
@@ -150,13 +167,35 @@ public class TrackingServlet extends HttpServlet {
 		resp.getWriter().print(res.toString());
 	}
 
-	private void doUpdate(HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		// return 304 Not Modified
-		resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-	}
-
-	private void doNotifyListeners() {
-		// TODO Auto-generated method stub		
+//	private void doUpdate(HttpServletResponse resp) {
+//		Cache c = getCache();
+//		int counter = 0;
+//		
+//		while(counter < 10) {
+//			if(c.get("notify") != null) {
+//				c.remove("notify");
+//				try {
+//					getAllClients(resp);
+//				} catch (IOException e) { } 
+//				return;
+//			}
+//			try {
+//				this.wait(5000);
+//			} catch (InterruptedException e) { }
+//			counter++;
+//		}
+//		
+//		resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+//	}
+//	
+//
+//	private void doNotifyListeners() {
+//		Cache c = getCache();
+//		c.put("notify", true);
+//		this.notifyAll();
+//	}
+	
+	private void doReturnMissingArgument(HttpServletResponse resp) {
+		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);		
 	}
 }
