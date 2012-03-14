@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, InfoatITUAppActivity!</string>
-    <string name="app_name">Info at ITU App</string>    
+    <string name="welcomemsg">Welcome to Info@ITU, please sign in with your Google ID so we can track you :)</string>
+    <string name="app_name">Info@ITU App</string>
+    <string name="sign_in">Sign in</string>    
 </resources>

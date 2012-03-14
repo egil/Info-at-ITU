@@ -17,8 +17,8 @@
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/httpclient-cache-4.1.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/httpclient-4.1.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/gson-1.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/dk.itu.perv.ituinfo.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/dk.itu.info.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
