@@ -2,5 +2,23 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/xstream-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/org.restlet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/org.restlet.ext.xml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/org.restlet.ext.json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/org.json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/jcaf.v15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/jcaf.examples.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/jackson-mrbean-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/jackson-mapper-lgpl-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/jackson-core-lgpl-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/httpmime-4.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/httpcore-4.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/httpclient-cache-4.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/httpclient-4.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/gson-1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/dk.itu.perv.ituinfo.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/commons-codec-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
