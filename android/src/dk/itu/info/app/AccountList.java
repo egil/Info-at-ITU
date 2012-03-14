@@ -19,12 +19,21 @@ public class AccountList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		accountManager = AccountManager.get(getApplicationContext());
 		Account[] accounts = accountManager.getAccountsByType("com.google");
-		this.setListAdapter(new ArrayAdapter(this, R.layout.list_item, accounts));
+		
+		if(accounts.length == 1) {
+			onAccountSelect(accounts[0]);
+		} else {
+			this.setListAdapter(new ArrayAdapter<Account>(this, R.layout.list_item, accounts));
+		}
 	}
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		Account account = (Account) getListView().getItemAtPosition(position);
+		onAccountSelect(account);
+	}
+	
+	private void onAccountSelect(Account account) {
 		Intent intent = new Intent(this, AppInfo.class);
 		intent.putExtra("account", account);
 		startActivity(intent);
