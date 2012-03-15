@@ -1,5 +1,6 @@
 package dk.itu.info.listner;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import dk.itu.info.entity.Room;
@@ -15,6 +16,8 @@ public class RoomListener implements EntityListener {
 	final Located located = new Located("located");
 	final Arrived arrived = new Arrived("arrived");
 	private Room room;
+
+	private Visitor isAtBoard = null;
 	private ContextService cs;
 	private HashMap<Visitor, String> visitors;
 
@@ -26,31 +29,31 @@ public class RoomListener implements EntityListener {
 
 	private HashMap<Visitor, String> getVisitors() {
 		HashMap<Visitor, String> vs = new HashMap<Visitor, String>();
-//		System.out.println(new Visitor("000ea50050b8", "jrjensen84").hashCode());
-		vs.put(new Visitor("000ea50050b8", "jrjensen84"),
-				"Hej Jonas her er noget info til dig!!!");
-		
+		Visitor v = new Visitor("000ea50050b8", "jrjensen84");
+		vs.put(v, "Hej Jonas her er noget info til dig!!!");
 		return vs;
 	}
 
 	@Override
 	public void contextChanged(ContextEvent event) {
 		Room r = ((Room) event.getItem());
+		Visitor v = (Visitor) event.getEntity();
 		if (r.equals(room)) {
-			System.out.println("Er i rum");
-			if (event.getRelationship() == arrived) {
-				System.out.println("A user have arrived at " + room.getId());
-			} else if (event.getRelationship() == located) {
-				System.out.println("En er located");
-				if (this.visitors.containsKey((Visitor) event.getEntity())) {
-					System.out.println(this.visitors.get((Visitor) event
-							.getEntity()));
+			if (isAtBoard == null) {
+				if (event.getRelationship().equals(arrived)) {
+					System.out
+							.println("A user have arrived at " + room.getId());
+				} else if (((Located) event.getRelationship()).equals(located)) {
+					isAtBoard = (Visitor) event.getEntity();
+					if (this.visitors.containsKey(isAtBoard)) {
+						System.out.println(this.visitors.get(isAtBoard));
+					}
 				}
 			}
+		} else if (v.equals(isAtBoard)) {
+			isAtBoard = null;
+			System.out.println(v.getName() + " has left the display and everything removes");
 		}
-		System.out.println(event.getEntity().getId() + " has "
-				+ event.getRelationship().toString() + " at floor " + r.getFloor()
-				+ " in sector " + r.getSector());
 
 	}
 }

@@ -26,11 +26,11 @@ public class TestMonitor extends AbstractContextClient {
 //
 //			}
 			
-			Visitor v = new Visitor("000ea50050b8","jonas");
+			Visitor v = new Visitor("000ea50050b8","jrjensen84");
 			this.createAreas();
-			getContextService().addEntity(v);
+			
 //			Room r = (Room)getContextService().getEntity("itu.zone4.zone4c1");
-			getContextService().addContextItem(v.getId(), arrived,getContextService().getEntity("itu.zone4.zone4c1"));
+			getContextService().addContextItem(v.getId(), located, (Room)getContextService().getEntity("itu.zone4.zone4c1"));
 			System.out.println("er færdig tilføjet ting!!");
 
 		} catch (RemoteException e1) {

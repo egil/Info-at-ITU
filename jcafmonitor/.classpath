@@ -19,6 +19,6 @@
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/gson-1.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/commons-codec-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/dk.itu.info.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jayar/Documents/ITU/Persavi/workspace JCAF/Framework/dk.itu.info.jar" sourcepath="/JCAFinfo"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
