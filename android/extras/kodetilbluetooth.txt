@@ -1,0 +1,66 @@
+	//ask the uses if bluetooth should be on for 300 sec
+	private Runnable getBluetoothActive = new Runnable() {
+		@Override
+		public void run() {
+			Intent discoverableIntent = new
+			Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+			startActivity(discoverableIntent);
+			mHandler.postDelayed(getBluetoothActive, 280000L);
+		}
+	};
+
+		private void startObserver(){
+				//Checks if the bluetooth is on
+				Thread startBluetooth = new Thread() {
+					public void run(){
+						mHandler.post(getBluetoothActive);
+//						while(checkBluetooth){
+//							
+//							try {
+//								Thread.sleep(280000L);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//						}
+					}
+				};
+				startBluetooth.start();
+				
+					//Sets and starts the geniehub listner
+					Thread getBluetoothAdr = new Thread() {
+						public void run(){
+							int checkBluetooth = 60;
+//							boolean isBluetoohOn = false;
+							Looper.prepare();
+							
+							while(myBluetoothAdr.compareTo("<UNKNOWN>")==0){
+								myBluetoothAdr = removeChar(BluetoothAdapter.getDefaultAdapter().getAddress());
+								Logger.global.info("min mac er" + myBluetoothAdr);
+								try {
+									Thread.sleep(500L);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								checkBluetooth--;
+								if(checkBluetooth==0){
+									myBluetoothAdr = " ";
+								}
+							}
+							
+							
+							if(checkBluetooth!=0){
+								mHandler.post(runStartEventBus);
+								Looper.myLooper().quit();
+							}else{
+								Logger.global.info("No bluetooth");
+								Looper.myLooper().quit();
+							}
+							Looper.loop();
+						}
+					};
+					getBluetoothAdr.start();
+				
+	}
