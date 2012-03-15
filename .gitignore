@@ -13,4 +13,5 @@ www-test
 /proxy/war/WEB-INF/appengine-generated/*
 /deploy
 /proxy/war/info_at_itu_proxy/
-R.java
+/android/gen
+/android/gen/*
