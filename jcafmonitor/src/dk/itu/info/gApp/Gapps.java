@@ -17,7 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import dk.itu.ituinfo.entity.Visitor;
+import dk.itu.info.entity.Visitor;
 import dk.pervasive.jcaf.Entity;
 import dk.pervasive.jcaf.util.AbstractMonitor;
 
