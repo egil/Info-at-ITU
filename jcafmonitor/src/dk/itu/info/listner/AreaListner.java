@@ -1,47 +1,55 @@
-package dk.itu.info.test;
+package dk.itu.info.listner;
 
 import java.rmi.RemoteException;
 
-import dk.itu.info.entity.*;
-import dk.itu.info.relationship.Arrived;
-import dk.pervasive.jcaf.Entity;
-import dk.pervasive.jcaf.relationship.Located;
+import dk.itu.info.entity.Room;
+import dk.itu.info.entity.Visitor;
+import dk.pervasive.jcaf.EntityNotFoundException;
+import dk.pervasive.jcaf.impl.RemoteEntityListenerImpl;
 import dk.pervasive.jcaf.util.AbstractContextClient;
 
-public class TestMonitor extends AbstractContextClient {
+public class AreaListner extends AbstractContextClient {
+	private RemoteEntityListenerImpl listener1;
 
-	public TestMonitor(String service_uri) {
+	public AreaListner(String service_uri) {
 		super(service_uri);
-		final Located located = new Located("located");
-		final Arrived arrived = new Arrived("arrived");
+		this.createAreas();
 
-//		Entity[] allVistors;
 		try {
-//			allVistors = getContextService()
-//					.getAllEntitiesByType(Visitor.class).getEntities();
-//			System.out.println("Disse er pt på nettet");
-//			for (Entity e : allVistors) {
-//				Visitor oneVis = (Visitor) e;
-//				System.out.println(oneVis.getEntityInfo());
-//
-//			}
-			
-			Visitor v = new Visitor("000ea50050b8","jonas");
-			this.createAreas();
-			getContextService().addEntity(v);
-//			Room r = (Room)getContextService().getEntity("itu.zone4.zone4c1");
-			getContextService().addContextItem(v.getId(), arrived,getContextService().getEntity("itu.zone4.zone4c1"));
-			System.out.println("er færdig tilføjet ting!!");
+			// 000ea50050b8
+			listener1 = new RemoteEntityListenerImpl();
+			listener1.addEntityListener(new RoomListener(
+					(Room) getContextService().getEntity("itu.zone3.zone3b"),
+					getContextService()));
+			getContextService().addEntityListener(listener1, Visitor.class);
 
-		} catch (RemoteException e1) {
+			System.out.println("har tilføjet ting");
+		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
+			// } catch (EntityNotFoundException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		new AreaListner("info@itu");
+
+	}
+
 	private void createAreas() {
 		try {
-			
+
 			if (getContextService().getAllEntitiesByType(Room.class).size() == 0) {
 				getContextService().addEntity(
 						new Room("itu.zone4.zone4b", 4, 'B', 1));
@@ -124,17 +132,4 @@ public class TestMonitor extends AbstractContextClient {
 			e.printStackTrace();
 		}
 	}
-
-
-	@Override
-	public void run() {
-
-	}
-	
-	public static void main(String[] args) {
-		new TestMonitor("info@itu");
-
-	}
-	
-
 }
