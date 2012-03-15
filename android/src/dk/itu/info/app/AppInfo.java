@@ -1,8 +1,6 @@
 package dk.itu.info.app;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -21,15 +19,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class AppInfo extends Activity {
-	DefaultHttpClient http_client = new DefaultHttpClient();
+	private DefaultHttpClient http_client;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_info);
+		this.http_client = InfoatITUAppActivity.http_client;
 	}
 
 	@Override
@@ -89,7 +87,7 @@ public class AppInfo extends Activity {
 					return false;
 				
 				for(Cookie cookie : http_client.getCookieStore().getCookies()) {
-					if(cookie.getName().equals("ACSID")) // might be SACSID
+					if(cookie.getName().equals("SACSID"))
 						return true;
 				}
 			} catch (ClientProtocolException e) {
@@ -105,38 +103,11 @@ public class AppInfo extends Activity {
 		}
 		
 		protected void onPostExecute(Boolean result) {
-			new AuthenticatedRequestTask().execute("https://info-at-itu-proxy.appspot.com/admin/");
+			Intent res= new Intent();
+			res.putExtra("isAuthenticated", result);
+			setResult(1, res);
+			finish();
 		}
 	}
 
-	private class AuthenticatedRequestTask extends AsyncTask<String, Void, HttpResponse> {
-		@Override
-		protected HttpResponse doInBackground(String... urls) {
-			try {
-				HttpGet http_get = new HttpGet(urls[0]);
-				return http_client.execute(http_get);
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-		protected void onPostExecute(HttpResponse result) {
-			try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(result.getEntity().getContent()));
-				String first_line = reader.readLine();
-				Toast.makeText(getApplicationContext(), first_line, Toast.LENGTH_LONG).show();				
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 }

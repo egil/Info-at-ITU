@@ -9,11 +9,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.02" >
-
+
         <TextView
             android:id="@+id/messageText"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_weight="0.02"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/messageText"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="72dp"
             android:onClick="onSignInOut"
             android:text="@string/sign_in" />
 

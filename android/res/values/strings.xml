@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Info@ITU App</string>
     <string name="welcome_msg">Welcome to Info@ITU, please sign in below with your Google ID below so we can track you :)</string>
-    <string name="tracking_you_msg">Welcome to Info@ITU. We are currently tracking your whereabouts, please sign out below if you want us to stop!</string>
+    <string name="tracking_you_msg">Welcome to Info@ITU. You are signed as <b>%1$s</b> and we are currently tracking your whereabouts, please sign out below if you want us to stop!</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>    
 </resources>

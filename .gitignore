@@ -24,3 +24,4 @@ www-test
 *.log
 *.out
 *.synctex.gz
+*.~vsd
