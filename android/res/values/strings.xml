@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcomemsg">Welcome to Info@ITU, please sign in with your Google ID so we can track you :)</string>
     <string name="app_name">Info@ITU App</string>
-    <string name="sign_in">Sign in</string>    
+    <string name="welcome_msg">Welcome to Info@ITU, please sign in below with your Google ID below so we can track you :)</string>
+    <string name="tracking_you_msg">Welcome to Info@ITU. We are currently tracking your whereabouts, please sign out below if you want us to stop!</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sign Out</string>    
 </resources>
