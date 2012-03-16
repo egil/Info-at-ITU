@@ -1,6 +1,5 @@
 /build
 /classes
-*.jar
 *.class
 *~
 */proxy/web-app/gwt
@@ -29,3 +28,5 @@ www-test
 *.out
 *.synctex.gz
 *.~vsd
+proxy/war/WEB-INF/lib
+proxy/war/WEB-INF/lib/*

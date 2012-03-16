@@ -44,7 +44,7 @@ breaklinks=true, }
 % \end{abstract}
 
 \section{Info@ITU}
-We decided to build a cloud based Info@ITU Proxy (proxy) which sits between the Info@ITU Monitor (monitor) and the phones.
+We decided to base our Info@ITU system on three main components, a Info@ITU Monitor (monitor), which tracks the user while inside ITU and displays information to the user when the user is close to a display, a Info@ITU Proxy (proxy) which sits between the monitor and the Android devices and keeps track of the devices that are entering and leaving ITU, and an Info@ITU App for tracking outside of ITU. This provices loose coupling between the components and in theory will allow us to scale up more easily.
 
 \subsection{Info@ITU Proxy}
 The proxy provides the following three service methods for the phones to use when interacting with the Info@ITU system:
@@ -68,6 +68,25 @@ A related feature to the \texttt{ping} method, which is not yet implemented, is 
 Push notificaitons from the proxy to the monitor would also be natural extension, since it would lower the resources required and allow the monitor to be notified almost instantly when a new phone `checks in'. In the current solution, the monitor pulls from the server every XX seconds to see if there are any new phones or phones that have left.
 
 \subsection{Info@ITU App}
+    For our Info@ITU App we wanted to solve the issue of identification (who is actually using the Android device), battery life, volatile state, and privacy.
+    
+    \paragraph{Identification} This is an issue even if mobile phones are often very personal, since they could be shared between people, or more likely, a person could have a private profile and a public profile. So to identify the user of the phone, we ask the user to select one of his Google accounts when signing in to Info@ITU from his device.
+    
+    \paragraph{Battery life} This can quickly become an issue when both WiFi, GPS and Bluetooth radios are turned on. So we try to be as effective as possible, only turning on Bluetooth when the device is actually inside ITU.
+    
+    \paragraph{Volatile state} The volatile state of mobile devices must also be considered -- the user can choose to turn it of, the device can run out of battery, the user can turn of Bluetooth or GPS, other applications can turn of Bluetooth or GPS, all things we need to consider when building an app like this that relies on these.
+    
+    
+    
+Considerations for the app:
+
+- We require users to log in with (one of) their Google accounts
+- Dont turn on Bluetooth discoverable mode before entering ITU (Battery and privacy)
+- Be unobtrusive when enabling/disabling the Bluetooth/GPS radios. Other Apps might be using those radios so we should log the state and not 
+- Using vibration, sound, and notification popups when entering and leaving ITU, so user knows we are turining on/off active tracking.
+- Handling normal conditions such as phone running out of batter, being turned of or loosing network connectivity (reliability)
+
+
 The workflow of our Android App is illustrated in figure \ref{fig:android-app-activity-diagram}. 
  
 \begin{figure}[t]
