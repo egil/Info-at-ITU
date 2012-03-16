@@ -1,0 +1,20 @@
+grant {
+      permission java.security.AllPermission;
+/*
+      permission java.net.SocketPermission "*:1024-65535", "connect,accept";
+      permission java.net.SocketPermission "*:80", "connect";
+      permission java.io.FilePermission "property/-", "read";
+      permission java.io.FilePermission "property\\-", "read";
+      permission java.io.FilePermission "data/-", "read,write";
+      permission java.io.FilePermission "data\\-", "read,write";
+      permission java.io.FilePermission "resources/-", "read,write";
+      permission java.io.FilePermission "resources\\-", "read,write";
+      permission java.io.FilePermission "dk/pervasive/phc/-", "read";
+      permission java.io.FilePermission "dk\\pervasive\\phc\\-", "read";
+      permission java.io.FilePermission "dk/pervasive/map/-", "read,write";
+      permission java.io.FilePermission "dk\\pervasive\\map\\-", "read,write";
+      permission java.util.PropertyPermission "*", "read,write";
+      permission java.awt.AWTPermission "showWindowWithoutWarningBanner";
+      permission java.lang.RuntimePermission "shutdownHooks"; 
+*/
+};
