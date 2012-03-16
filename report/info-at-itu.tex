@@ -68,15 +68,16 @@ This method returns a JSON formatted aray of all clients that have been `checked
 \end{itemize}
 
 The reason why we added the \texttt{ping} method is to handle the common scenario where the phone is out of range of ITU's BLIP sensors for a longe time, i.e. when the owner is in a meeting room or lecture hall, or if the owner has turned of his phone or the phone has simply run out of power. If the proxy stops receiving pings from the phone, we assume that the phone should no longer be tracked and can save resources on the monitor.
+
 \subsection{Future Work}
 
-A related feature to the \texttt{ping} method, which is not yet implemented, is a scheduled clean-up job, that searches through the list of `checked in' phones on the proxy and removes those who have not `pinged in' for XX minutes.
+A related feature to the \texttt{ping} method, which is not yet implemented, is a scheduled clean-up job, that searches through the list of `checked in' phones on the proxy and removes those who have not `pinged in' for 20 minutes.
 
-Push notificaitons from the proxy to the monitor would also be natural extension, since it would lower the resources required and allow the monitor to be notified almost instantly when a new phone `checks in'. In the current solution, the monitor pulls from the server every XX seconds to see if there are any new phones or phones that have left.
+Push notificaitons from the proxy to the monitor would also be natural extension, since it would lower the resources required and allow the monitor to be notified almost instantly when a new phone `checks in'. In the current solution, the monitor pulls from the server every 15 seconds to see if there are any new phones or phones that have left.
 
 \section{Info@ITU App}
 
-For our Info@ITU App we wanted to solve the issue of identification (who is actually using the Android device), battery life, volatile state, and privacy.
+For our Info@ITU App we considered the problems with identification (who is actually using the Android device), battery life, and volatile state.
 
 \paragraph{Identification}
 This is an issue even if mobile phones are often very personal, since they could be shared between people, or more likely, a person could have a private profile and a public profile. So to identify the user of the phone, we ask the user to select one of his Google accounts when signing in to Info@ITU from his device. This also enable the scenario where a user switches between devices or is signed in with multiple devices, since we identify him and his devices by his Google ID, not by an MAC address.
@@ -87,21 +88,17 @@ This can quickly become an issue when both WiFi, GPS and Bluetooth radios are tu
 \paragraph{Volatile state}
 The volatile state of mobile devices must also be considered -- the user can choose to turn it of, the device can run out of battery, the user can turn of Bluetooth or GPS, other applications can turn of Bluetooth or GPS, all things we need to consider when building an app like this that relies on these.
 
+The workflow of our App is illustrated in figure \ref{fig:android-app-activity-diagram}. Before we enter into the initial waiting state in the figure, the user is asked  to sign in to our application with a Google ID of his choice.
 
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=0.90\columnwidth]{android-app-activity-diagram.pdf}
+\end{center}
+\caption{Activity diagram for the Info@ITU App.}
+\label{fig:android-app-activity-diagram}
+\end{figure}
 
-Considerations for the app:
-
-- We require users to log in with (one of) their Google accounts
-- Dont turn on Bluetooth discoverable mode before entering ITU (Battery and privacy)
-- Be unobtrusive when enabling/disabling the Bluetooth/GPS radios. Other Apps might be using those radios so we should log the state and not
-- Using vibration, sound, and notification popups when entering and leaving ITU, so user knows we are turining on/off active tracking.
-- Handling normal conditions such as phone running out of batter, being turned of or loosing network connectivity (reliability)
-
-
-The workflow of our Android App is illustrated in figure \ref{fig:android-app-activity-diagram}.
-
-
-\bibliographystyle{abbrv}
-\bibliography{bibliography}
+%\bibliographystyle{abbrv}
+%\bibliography{bibliography}
 
 \end{document}
