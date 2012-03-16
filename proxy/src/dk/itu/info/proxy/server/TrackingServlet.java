@@ -47,15 +47,19 @@ public class TrackingServlet extends HttpServlet {
 		} else if (uri.equalsIgnoreCase("/entering")) {
 			// get current users google account name or redirect them
 			// to the login page if they are not signed in to google
-			UserService userService = UserServiceFactory.getUserService();
-			User user = userService.getCurrentUser();
+//			UserService userService = UserServiceFactory.getUserService();
+//			User user = userService.getCurrentUser();
+//			
+//			if (user != null) {
+//				doEntering(user.getNickname(), macAddress, resp);
+//			} else {
+//				resp.sendRedirect(userService.createLoginURL("/"));
+//			}
 			
-			if (user != null) {
-				doEntering(user.getNickname(), macAddress, resp);
-			} else {
-				resp.sendRedirect(userService.createLoginURL("/"));
-			}
-			
+			int i = macAddress.indexOf('&');
+			String name = macAddress.substring(i+1);
+			macAddress = macAddress.substring(0, i);
+			doEntering(name, macAddress, resp);
 		} else if (uri.equalsIgnoreCase("/ping")) {
 			doPong(macAddress, resp);
 		} else if (uri.equalsIgnoreCase("/update")) {
