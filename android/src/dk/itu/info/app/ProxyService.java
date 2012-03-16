@@ -25,13 +25,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class ProxyService extends IntentService {
-	private static long PING_DELAY = 5000; //1200000;
-	
-	private String btmacaddr;	
+	private static long PING_DELAY = 1200000;
+
+	private String btmacaddr;
 	private Account account;
 	private DefaultHttpClient http_client;
 	private volatile Boolean isRunning = false;
-	
+
 	public ProxyService() {
 		super("TrackingService");
 		this.http_client = InfoatITUAppActivity.http_client;
@@ -51,7 +51,7 @@ public class ProxyService extends IntentService {
 
 		// call /leaving on proxy service
 		new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/leaving?" + btmacaddr);
-		
+
 		super.onDestroy();
 	}
 
@@ -59,9 +59,9 @@ public class ProxyService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		btmacaddr = (String) intent.getExtras().get("btmacaddr");
 		account = (Account) intent.getExtras().get("account");
-		// call /entering on proxy service		
+		// call /entering on proxy service
 		new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/entering?" + btmacaddr + "&" + account.name);
-		
+
 		// every 20 minutes, call /ping on proxy service
 		isRunning = true;
 		while (isRunning) {
@@ -74,18 +74,18 @@ public class ProxyService extends IntentService {
 				} catch (Exception e) {
 					Log.e("info@itu", "Crashed while waiting.", e);
 					stopSelf();
-				} 
+				}
 			}
 		}
 	}
-	
+
 	private class AuthenticatedRequestTask extends AsyncTask<String, Void, HttpResponse> {
 		@Override
 		protected HttpResponse doInBackground(String... urls) {
 			try {
 				Log.i("info@itu", "Proxy call: " + urls[0]);
 				HttpGet http_get = new HttpGet(urls[0]);
-				
+
 				return http_client.execute(http_get);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
