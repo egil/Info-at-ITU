@@ -28,6 +28,7 @@ public class ProxyService extends IntentService {
 	private static long PING_DELAY = 5000; //1200000;
 	
 	private String btmacaddr;	
+	private Account account;
 	private DefaultHttpClient http_client;
 	private volatile Boolean isRunning = false;
 	
@@ -57,9 +58,9 @@ public class ProxyService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		btmacaddr = (String) intent.getExtras().get("btmacaddr");
-		
+		account = (Account) intent.getExtras().get("account");
 		// call /entering on proxy service		
-		new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/entering?" + btmacaddr);
+		new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/entering?" + btmacaddr + "&" + account.name);
 		
 		// every 20 minutes, call /ping on proxy service
 		isRunning = true;

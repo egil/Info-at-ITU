@@ -246,9 +246,11 @@ public class InfoatITUAppActivity extends Activity {
 			Log.i("info@itu", "State: Enabled BT");
 
 			// authenticate
-			Intent intent = new Intent(this, AppInfo.class);
-			intent.putExtra("account", account);
-			startActivityForResult(intent, AUTHENTICATE_AGAINST_PROXY);
+//			Intent intent = new Intent(this, AppInfo.class);
+//			intent.putExtra("account", account);
+//			startActivityForResult(intent, AUTHENTICATE_AGAINST_PROXY);
+			currentState = AppState.AUTHENTICATED;
+			gotoNext();
 
 			break;
 		case AUTHENTICATED:
@@ -257,6 +259,7 @@ public class InfoatITUAppActivity extends Activity {
 			// start tracking service
 			proxyService = new Intent(this, ProxyService.class);
 			proxyService.putExtra("btmacaddr", btmacaddr);
+			proxyService.putExtra("account", account);
 			startService(proxyService);
 			currentState = AppState.INSIDE_ITU;
 
