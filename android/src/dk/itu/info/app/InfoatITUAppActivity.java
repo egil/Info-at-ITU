@@ -28,7 +28,8 @@ public class InfoatITUAppActivity extends Activity {
 	private final double latitude = 12.57196;
 	private static final int radius = 100;
 	private static final String proxi_alert_intent = "dk.itu.info.location";
-	private String isInarea = null;
+	private String enteringInfo = null;
+	private boolean isInarea = false;
 	private boolean isGPS;
 
 	private enum AppState {
@@ -68,13 +69,15 @@ public class InfoatITUAppActivity extends Activity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		isInarea = intent.getStringExtra("entering");
-		Log.d("InfoAtItulocationActivity", "onNewIntent is called!" + isInarea);
-		if (isInarea.equals("enter")) {
+		enteringInfo = intent.getStringExtra("entering");
+		Log.d("InfoAtItulocationActivity", "onNewIntent is called!" + enteringInfo);
+		if (enteringInfo.equals("enter")&&!isInarea) {
 			this.currentState = AppState.ENTERING_ITU;
+			isInarea = true;
 			this.gotoNext();
-		} else if (isInarea.equals("leaving")) {
+		} else if (enteringInfo.equals("leaving")&&isInarea) {
 			this.currentState = AppState.LEAVING_ITU;
+			isInarea = false;
 			this.gotoNext();
 		}
 	}
@@ -92,21 +95,23 @@ public class InfoatITUAppActivity extends Activity {
 					.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		}
 		Log.i("InfoAtItulocationActivity", "Gps" + isGPS);
-		if (isInarea == null) {
+		if (enteringInfo == null) {
 			if (this.getIntent().getStringExtra("entering") != null) {
-				isInarea = this.getIntent().getStringExtra("entering");
-				if (isInarea.equals("enter")) {
+				enteringInfo = this.getIntent().getStringExtra("entering");
+				if (enteringInfo.equals("enter")&&!isInarea) {
 					this.currentState = AppState.ENTERING_ITU;
+					isInarea = true;
 					this.gotoNext();
-				} else if (isInarea.equals("leaving")) {
+				} else if (enteringInfo.equals("leaving")&&isInarea) {
 					this.currentState = AppState.LEAVING_ITU;
+					isInarea = false;
 					this.gotoNext();
 				}
 				Log.d("InfoAtItulocationActivity", "entering er true");
 			}
 
 		}
-		isInarea = null;
+		enteringInfo = null;
 		super.onResume();
 	}
 
