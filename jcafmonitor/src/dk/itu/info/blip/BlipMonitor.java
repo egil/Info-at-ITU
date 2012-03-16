@@ -158,6 +158,8 @@ public class BlipMonitor extends AbstractMonitor {
 
 			if (getContextService().getAllEntitiesByType(Room.class).size() == 0) {
 				getContextService().addEntity(
+						new Room("itu", 0, 'A', 1));
+				getContextService().addEntity(
 						new Room("itu.zone4.zone4b", 4, 'B', 1));
 				getContextService().addEntity(
 						new Room("itu.zone4.zone4d", 4, 'D', 1));

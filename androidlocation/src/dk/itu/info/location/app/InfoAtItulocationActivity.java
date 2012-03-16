@@ -2,9 +2,11 @@ package dk.itu.info.location.app;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +15,13 @@ public class InfoAtItulocationActivity extends Activity {
 	private LocationManager locationManager;
 	// 55.70982, 12.57196
 	// 55.65970, 12.59103
-	private final double longitude = 55.70982;
-	private final double latitude = 12.57196;
-	private static final int radius = 100;
+//	private final double longitude = 55.70982;
+//	private final double latitude = 12.57196;
+
+//	ITU
+	private final double longitude = 12.59103;
+	private final double latitude =  55.65959;
+	private static final int radius = 1000;
 	private static final String proxi_alert_intent = "dk.itu.info.location";
 	private boolean isInarea = false;
 	private SharedPreferences mPreferences;
@@ -30,18 +36,31 @@ public class InfoAtItulocationActivity extends Activity {
 		setContentView(R.layout.main);
 		mPreferences = getSharedPreferences("broadcastset", MODE_PRIVATE);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		if(!isBroadcastset){
+			this.addProximityAlert();
+		}
 
 	}
 
 	private void addProximityAlert() {
-
+		Location lo = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		 
+		Location ituLocation = new Location("POINT_LOCATION");
+		 ituLocation.setLatitude(this.latitude);
+		 ituLocation.setLongitude(this.longitude);
+		 
+		if(lo.distanceTo(ituLocation)<100){
+			Log.d("InfoAtItulocationActivity", "er i bygningen");
+		}else{
+			Log.d("InfoAtItulocationActivity", "Distance til sted " + lo.distanceTo(ituLocation));
+		}
 		Intent intent = new Intent(proxi_alert_intent);
 		PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
 		// 55,65970, 12,59103
 		locationManager.addProximityAlert(this.latitude, this.longitude,
 				radius, -1, proximityIntent);
-
+		this.isBroadcastset = true;
 		// IntentFilter filter = new IntentFilter(proxi_alert_intent);
 		// registerReceiver(new ProximityIntentReceiver(), filter);
 
@@ -82,14 +101,17 @@ public class InfoAtItulocationActivity extends Activity {
 			}else{
 				isBroadcastSee = false;
 			}
+			
 		} else {
-			this.addProximityAlert();
+			
 			isBroadcastset = true;
 			SharedPreferences.Editor editor=mPreferences.edit();
 			editor.putBoolean("isSet", true);
 			editor.commit();
 		}
+		
 		super.onResume();
+		
 	}
 
 	@Override

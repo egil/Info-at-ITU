@@ -19,7 +19,7 @@ public class AreaListner extends AbstractContextClient {
 			// 000ea50050b8
 			listener1 = new RemoteEntityListenerImpl();
 			listener1.addEntityListener(new RoomListener(
-					(Room) getContextService().getEntity("itu.zone3.zone3b"),
+					(Room) getContextService().getEntity("itu.zone2.zone2c"),
 					getContextService()));
 			getContextService().addEntityListener(listener1, Visitor.class);
 

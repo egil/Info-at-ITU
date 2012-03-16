@@ -17,12 +17,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dk.itu.info.entity.Room;
 import dk.itu.info.entity.Visitor;
+import dk.itu.info.relationship.Left;
 import dk.pervasive.jcaf.Entity;
 import dk.pervasive.jcaf.util.AbstractMonitor;
 
 public class Gapps extends AbstractMonitor {
-
+	final Left left = new Left("Left");
 	public Gapps(String service_uri) throws RemoteException {
 		super(service_uri);
 		// TODO Auto-generated constructor stub
@@ -86,6 +88,10 @@ public class Gapps extends AbstractMonitor {
 							}
 						}
 						if (!isRegistred) {
+							System.out.println("bruger har forladt");
+							Room r = (Room) getContextService().getEntity("itu");
+							getContextService().addContextItem(e.getId(), left, r);
+							Thread.sleep(1000L);
 							getContextService().removeEntity(e);
 						}
 					}

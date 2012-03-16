@@ -24,14 +24,14 @@ public class InfoatITUAppActivity extends Activity {
 	private LocationManager locationManager;
 
 // jonas hjem 55.70982, 12.57196
-//	private final double longitude = 55.70982;
-//	private final double latitude = 12.57196;
+//	private final double longitude = 12.57196;
+//	private final double latitude = 55.70982;
 
 //	ITU
-	private final double longitude = 55.65970;
-	private final double latitude = 12.59103;
-
-	private static final int radius = 100;
+	private final double longitude = 12.59103;
+	private final double latitude = 55.65959;
+	
+	private static final int radius = 1000;
 	private static final String proxi_alert_intent = "dk.itu.info.location";
 	private String enteringInfo = null;
 	private boolean isInarea = false;
@@ -90,8 +90,10 @@ public class InfoatITUAppActivity extends Activity {
 	@Override
 	protected void onResume() {
 		Log.i("info@itu", "onresum køre");
-				Log.i("info@itu", "Gps" + isGPS);
+		Log.i("info@itu", "Gps" + isGPS + " "+ enteringInfo);
 		if (enteringInfo == null) {
+			Log.i("info@itu", "Entering " + this.getIntent().getStringExtra("entering"));
+			//
 			if (this.getIntent().getStringExtra("entering") != null) {
 				enteringInfo = this.getIntent().getStringExtra("entering");
 				if (enteringInfo.equals("enter")&&!isInarea) {
@@ -219,8 +221,8 @@ public class InfoatITUAppActivity extends Activity {
 			this.startGps();
 			this.addProximityAlert();
 			// TEMP: skipping to entering
-			currentState = AppState.ENTERING_ITU;
-			gotoNext();
+//			currentState = AppState.ENTERING_ITU;
+//			gotoNext();
 			break;
 		case ENTERING_ITU:
 			Log.i("info@itu", "State: Entering ITU");
