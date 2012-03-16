@@ -1,6 +1,7 @@
 package dk.itu.info.app;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -85,9 +86,9 @@ public class AppInfo extends Activity {
 				if(response.getStatusLine().getStatusCode() != 302)
 					// Response should be a redirect
 					return false;
-				
-				for(Cookie cookie : http_client.getCookieStore().getCookies()) {
-					if(cookie.getName().equals("SACSID"))
+				List<Cookie> cookies = http_client.getCookieStore().getCookies();
+				for(Cookie cookie : cookies) {
+					if(cookie.getName().equals("ACSID") || cookie.getName().equals("SACSID"))
 						return true;
 				}
 			} catch (ClientProtocolException e) {

@@ -49,7 +49,7 @@ public class ProxyService extends IntentService {
 		Log.i("info@itu", "Stopping proxy service");
 
 		// call /leaving on proxy service
-		new AuthenticatedRequestTask().doInBackground("https://info-at-itu-proxy.appspot.com/leaving?" + btmacaddr);
+		new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/leaving?" + btmacaddr);
 		
 		super.onDestroy();
 	}
@@ -59,7 +59,7 @@ public class ProxyService extends IntentService {
 		btmacaddr = (String) intent.getExtras().get("btmacaddr");
 		
 		// call /entering on proxy service		
-		new AuthenticatedRequestTask().doInBackground("https://info-at-itu-proxy.appspot.com/entering?" + btmacaddr);
+		new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/entering?" + btmacaddr);
 		
 		// every 20 minutes, call /ping on proxy service
 		isRunning = true;
@@ -68,7 +68,7 @@ public class ProxyService extends IntentService {
 				try {
 					wait(PING_DELAY);
 					if(isRunning) {
-						new AuthenticatedRequestTask().doInBackground("https://info-at-itu-proxy.appspot.com/ping?" + btmacaddr);
+						new AuthenticatedRequestTask().doInBackground("http://info-at-itu-proxy.appspot.com/ping?" + btmacaddr);
 					}
 				} catch (Exception e) {
 					Log.e("info@itu", "Crashed while waiting.", e);
@@ -84,10 +84,11 @@ public class ProxyService extends IntentService {
 			try {
 				Log.i("info@itu", "Proxy call: " + urls[0]);
 				HttpGet http_get = new HttpGet(urls[0]);
+				
 				return http_client.execute(http_get);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e("info@itu", "Crashed while accss", e);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

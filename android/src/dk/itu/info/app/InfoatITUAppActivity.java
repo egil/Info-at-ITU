@@ -22,10 +22,15 @@ public class InfoatITUAppActivity extends Activity {
 	private static final int ENABLE_DISCOVERABLE_MODE = 2;
 	private static final int AUTHENTICATE_AGAINST_PROXY = 3;
 	private LocationManager locationManager;
-	// 55.70982, 12.57196
-	// 55.65970, 12.59103
-	private final double longitude = 55.70982;
-	private final double latitude = 12.57196;
+
+// jonas hjem 55.70982, 12.57196
+//	private final double longitude = 55.70982;
+//	private final double latitude = 12.57196;
+
+//	ITU
+	private final double longitude = 55.65970;
+	private final double latitude = 12.59103;
+
 	private static final int radius = 100;
 	private static final String proxi_alert_intent = "dk.itu.info.location";
 	private String enteringInfo = null;
@@ -70,7 +75,7 @@ public class InfoatITUAppActivity extends Activity {
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		enteringInfo = intent.getStringExtra("entering");
-		Log.d("InfoAtItulocationActivity", "onNewIntent is called!" + enteringInfo);
+		Log.d("info@itu", "onNewIntent is called!" + enteringInfo);
 		if (enteringInfo.equals("enter")&&!isInarea) {
 			this.currentState = AppState.ENTERING_ITU;
 			isInarea = true;
@@ -84,17 +89,8 @@ public class InfoatITUAppActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		Log.i("InfoAtItulocationActivity", "onresum køre");
-		isGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!isGPS) {
-			startActivityForResult(new Intent(
-					android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),
-					0);
-
-			isGPS = locationManager
-					.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		}
-		Log.i("InfoAtItulocationActivity", "Gps" + isGPS);
+		Log.i("info@itu", "onresum køre");
+				Log.i("info@itu", "Gps" + isGPS);
 		if (enteringInfo == null) {
 			if (this.getIntent().getStringExtra("entering") != null) {
 				enteringInfo = this.getIntent().getStringExtra("entering");
@@ -107,12 +103,25 @@ public class InfoatITUAppActivity extends Activity {
 					isInarea = false;
 					this.gotoNext();
 				}
-				Log.d("InfoAtItulocationActivity", "entering er true");
+				Log.d("info@itu", "entering er true");
 			}
 
 		}
 		enteringInfo = null;
 		super.onResume();
+	}
+	
+	private void startGps(){
+		isGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!isGPS) {
+			startActivityForResult(new Intent(
+					android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+					0);
+
+			isGPS = locationManager
+					.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		}
+
 	}
 
 	private void addProximityAlert() {
@@ -207,6 +216,7 @@ public class InfoatITUAppActivity extends Activity {
 			Log.i("info@itu", "State: Signed in");
 			setTextInUI();
 			// start GPS tracker activity
+			this.startGps();
 			this.addProximityAlert();
 			// TEMP: skipping to entering
 			currentState = AppState.ENTERING_ITU;
