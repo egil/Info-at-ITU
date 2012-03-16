@@ -17,6 +17,10 @@ www-test
 /android/gen/*
 /android/bin
 /android/bin/*
+/androidlocation/gen
+/androidlocation/gen/*
+/androidlocation/bin
+/androidlocation/bin/*
 
 *.aux
 *.bbl
