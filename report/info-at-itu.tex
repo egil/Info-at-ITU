@@ -44,6 +44,7 @@ breaklinks=true, }
 
 Our Info@ITU system is build up of three main components, a monitor, a cloud based proxy, and a Android app. The monitor tracks the user while inside ITU and displays information to the user when the user is close to a display, the app keeps track of when the user leaves or enters ITU, and the proxy enables the app to communicate with the monitor. The deployment diagram in figure \ref{fig:deployment-diagram} illustrates this.
 
+\subsection{Context-Aware Applications}
 The Info@ITU system only really relies on location as context, but it is easy to imaging a few extensions that would increse the value and usability of the system.
 
 Location could be enhanced with accelorametor and a compas sensor to the Android app, that would allow the Android app to determine if the user has been sitting still for a while,
@@ -51,7 +52,7 @@ e.g. at a session. A combination of an accelorametor and a compas could help det
 
 Another enhancement would be to also consider if other users is standing in front of a display, which may be able to solve privacy concerns, i.e. by filtering away private information from the display if the user is not alone in front if it.
 
-Considering the fact that the main scenario is ITU hosting a Ubicomp conference, adding time and date to the context is a given. It could, for example, help automatically show upcoming sessions.og
+Considering the fact that the main scenario is ITU hosting a Ubicomp conference, adding time and date to the context is a given. It could, for example, help automatically show upcoming sessions.
 
 \begin{figure}[t]
 \begin{center}
@@ -60,9 +61,8 @@ Considering the fact that the main scenario is ITU hosting a Ubicomp conference,
 \caption{Deployment diagram for our Info@ITU system.}
 \label{fig:deployment-diagram}
 \end{figure}
-\subsection{Context-Aware Applications}
 
-\section{Info@ITU Monitor}
+\section{Monitor}
 
 To be able to track our users at ITU, we are using a combination of JCAF and the BLIP system where JCAF has all the information about the user and displays the relevant information to the designated monitor, and BLIP is used to keep watch of were the users is at ITU.
 The first thing that we designed for our JCAF system was a jar called dk.itu.info.jar, which contains all the objects that is going to be used in our system. As JCAF is a RMI system we need to have the same type of objects both at the server and in the different components as monitors and listeners.
@@ -79,7 +79,8 @@ Blipmonitor
 - kunne tælle hvis en bruger er null så er man væk
 - blip er kun tilgængeligt i små områder
 AreaListener
-\section{Info@ITU Proxy}
+
+\section{Proxy}
 
 The proxy is available at http://info-at-itu-proxy.appspot.com and provides the following service methods for the monitor and mobile devices:
 
@@ -100,7 +101,8 @@ The reason why we added the \texttt{ping} method is to handle the common scenari
 A related feature to the \texttt{ping} method, which is not yet implemented, is a scheduled clean-up job, that searches through the list of `checked in' phones on the proxy and removes those who have not `pinged in' for 20 minutes.
 
 Push notificaitons from the proxy to the monitor would also be natural extension, since it would lower the resources required and allow the monitor to be notified almost instantly when a new phone `checks in'. In the current solution, the monitor pulls from the server every 15 seconds to see if there are any new phones or phones that have left.
-\section{Info@ITU App}
+
+\section{App}
 
 For our Info@ITU App we considered the problems with identification (who is actually using the Android device), battery life, and volatile state.
 \paragraph{Identification}
